@@ -11,15 +11,20 @@ Las imágenes ya están compiladas bajo **Java 26** y publicadas en Docker Hub. 
 ```bash
 # Descargar Microservicio Vehículos
 docker pull marco2909/hct-vehiculo:latest
+https://hub.docker.com/r/marco2909/hct-vehiculo
 
 # Descargar Microservicio Clientes
 docker pull marco2909/hct-cliente:latest
+https://hub.docker.com/r/marco2909/hct-cliente
 
 # Descargar Microservicio Alquileres (Transaccional)
 docker pull marco2909/hct-alquiler:latest
+https://hub.docker.com/r/marco2909/hct-alquiler
 
 # Descargar Frontend (Angular expuesto en Nginx)
 docker pull marco2909/hct-frontend:latest
+https://hub.docker.com/r/marco2909/hct-frontend
+
 ```
 
 ---
