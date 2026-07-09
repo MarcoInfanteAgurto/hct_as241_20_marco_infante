@@ -6,26 +6,27 @@ Este repositorio contiene la solución completa para el sistema de **Alquiler de
 
 ## 🐳 Referencia de Imágenes en Docker Hub
 
-Las imágenes ya están compiladas bajo **Java 26** y publicadas en Docker Hub. Se pueden descargar de forma pública en cualquier máquina ejecutando los siguientes comandos:
+Las imágenes ya están compiladas con **Java 26** y publicadas en Docker Hub. En cualquier equipo solo debes ejecutar:
 
 ```bash
-# Descargar Microservicio Vehículos
 docker pull marco2909/hct-vehiculo:latest
-https://hub.docker.com/r/marco2909/hct-vehiculo
-
-# Descargar Microservicio Clientes
 docker pull marco2909/hct-cliente:latest
-https://hub.docker.com/r/marco2909/hct-cliente
-
-# Descargar Microservicio Alquileres (Transaccional)
 docker pull marco2909/hct-alquiler:latest
-https://hub.docker.com/r/marco2909/hct-alquiler
-
-# Descargar Frontend (Angular expuesto en Nginx)
 docker pull marco2909/hct-frontend:latest
-https://hub.docker.com/r/marco2909/hct-frontend
-
 ```
+
+Puedes verificar la descarga ejecutando:
+
+```bash
+docker images
+```
+
+Repositorios en Docker Hub:
+
+- https://hub.docker.com/r/marco2909/hct-vehiculo
+- https://hub.docker.com/r/marco2909/hct-cliente
+- https://hub.docker.com/r/marco2909/hct-alquiler
+- https://hub.docker.com/r/marco2909/hct-frontend
 
 ---
 
