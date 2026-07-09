@@ -1,0 +1,99 @@
+<div class="contenedor">
+  <h2><i class="fa-solid fa-car"></i> Gestión de Vehículos</h2>
+
+  <!-- Formulario de creación -->
+  <div class="formulario">
+    <h3><i class="fa-solid fa-square-plus"></i> Nuevo Vehículo</h3>
+    <div class="grid-inputs">
+      <div class="input-group">
+        <label>Placa</label>
+        <input [(ngModel)]="nuevoVehiculo.placa" placeholder="Ingrese Placa" />
+      </div>
+      <div class="input-group">
+        <label>Marca</label>
+        <input [(ngModel)]="nuevoVehiculo.marca" placeholder="Marca" />
+      </div>
+      <div class="input-group">
+        <label>Modelo</label>
+        <input [(ngModel)]="nuevoVehiculo.modelo" placeholder="Modelo" />
+      </div>
+      <div class="input-group">
+        <label>Año</label>
+        <input [(ngModel)]="nuevoVehiculo.anio" type="number" placeholder="Año" />
+      </div>
+      <div class="input-group">
+        <label>Color</label>
+        <input [(ngModel)]="nuevoVehiculo.color" placeholder="Color" />
+      </div>
+      <div class="input-group">
+        <label>Precio por Día (S/.)</label>
+        <input [(ngModel)]="nuevoVehiculo.precioPoDia" type="number" placeholder="Precio" />
+      </div>
+    </div>
+    <button class="btn-primary" (click)="crear()">
+      <i class="fa-solid fa-save"></i> Registrar Vehículo
+    </button>
+  </div>
+
+  <!-- Tabla de listado -->
+  <div class="table-container">
+    <table class="premium-table">
+      <thead>
+        <tr>
+          <th>Vehículo (Marca / Modelo)</th>
+          <th>Placa</th>
+          <th>Año</th>
+          <th>Color</th>
+          <th>Precio/Día</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let v of vehiculos">
+          <td>
+            <div class="user-meta">
+              <div class="avatar-circle vehiculo">
+                <i class="fa-solid fa-car-side"></i>
+              </div>
+              <div class="user-name">{{ v.marca }} {{ v.modelo }}</div>
+            </div>
+          </td>
+          <td>{{ v.placa }}</td>
+          <td>{{ v.anio }}</td>
+          <td>{{ v.color }}</td>
+          <td>S/. {{ v.precioPoDia }}</td>
+          <td>
+            <span class="badge" [ngClass]="v.estado?.replace('_', '')?.toLowerCase() || 'disponible'">
+              {{ v.estado?.replace('_', ' ') }}
+            </span>
+          </td>
+          <td>
+            <div class="actions-cell">
+              <button 
+                *ngIf="v.estado === 'DISPONIBLE'" 
+                class="btn-action desactivar" 
+                title="Desactivar Vehículo (No Disponible)" 
+                (click)="desactivar(v.id!)">
+                <i class="fa-solid fa-ban"></i>
+              </button>
+              <button 
+                *ngIf="v.estado === 'NO_DISPONIBLE'" 
+                class="btn-action activar" 
+                title="Activar Vehículo (Disponible)" 
+                (click)="activar(v.id!)">
+                <i class="fa-solid fa-circle-check"></i>
+              </button>
+              <button 
+                class="btn-action eliminar" 
+                title="Eliminar Vehículo" 
+                (click)="eliminar(v.id!)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

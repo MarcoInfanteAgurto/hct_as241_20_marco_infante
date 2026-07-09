@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hct-cliente-deployment
+  namespace: hct-cliente
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hct-cliente
+  template:
+    metadata:
+      labels:
+        app: hct-cliente
+    spec:
+      containers:
+        - name: hct-cliente
+          image: marco2909/hct-cliente:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: hct-cliente-secret
+                  key: MONGODB_URI

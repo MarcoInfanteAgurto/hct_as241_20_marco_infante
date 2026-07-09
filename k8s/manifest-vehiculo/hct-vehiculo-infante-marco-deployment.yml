@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hct-vehiculo-deployment
+  namespace: hct-vehiculo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hct-vehiculo
+  template:
+    metadata:
+      labels:
+        app: hct-vehiculo
+    spec:
+      containers:
+        - name: hct-vehiculo
+          image: marco2909/hct-vehiculo:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: hct-vehiculo-secret
+                  key: MONGODB_URI

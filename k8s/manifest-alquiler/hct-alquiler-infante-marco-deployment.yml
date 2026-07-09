@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hct-alquiler-deployment
+  namespace: hct-alquiler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hct-alquiler
+  template:
+    metadata:
+      labels:
+        app: hct-alquiler
+    spec:
+      containers:
+        - name: hct-alquiler
+          image: marco2909/hct-alquiler:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: hct-alquiler-secret
+                  key: MONGODB_URI
+            - name: VEHICULO_URL
+              value: "http://hct-vehiculo-service.hct-vehiculo.svc.cluster.local:8081"
+            - name: CLIENTE_URL
+              value: "http://hct-cliente-service.hct-cliente.svc.cluster.local:8082"

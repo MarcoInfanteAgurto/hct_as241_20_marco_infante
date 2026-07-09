@@ -1,0 +1,111 @@
+<div class="contenedor">
+  <h2><i class="fa-solid fa-file-invoice-dollar"></i> Control de Alquileres</h2>
+
+  <div class="formulario">
+    <h3><i class="fa-solid fa-plus-minus"></i> Registrar Nuevo Alquiler</h3>
+    <div class="grid-inputs">
+      <div class="input-group">
+        <label>Cliente (DNI - Nombres)</label>
+        <select [(ngModel)]="nuevoAlquiler.clienteId">
+          <option value="" disabled selected>-- Seleccione Cliente --</option>
+          <option *ngFor="let c of clientesActivos" [value]="c.id">
+            {{ c.dni }} - {{ c.apellidos }} {{ c.nombres }}
+          </option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>Vehículo (Placa - Marca Modelo)</label>
+        <select [(ngModel)]="nuevoAlquiler.vehiculoId">
+          <option value="" disabled selected>-- Seleccione Vehículo --</option>
+          <option *ngFor="let v of vehiculosDisponibles" [value]="v.id">
+            {{ v.placa }} - {{ v.marca }} {{ v.modelo }}
+          </option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>Días de Alquiler</label>
+        <input [(ngModel)]="nuevoAlquiler.dias" type="number" min="1" placeholder="Días" />
+      </div>
+
+      <div class="input-group">
+        <label>Fecha de Inicio</label>
+        <input [(ngModel)]="nuevoAlquiler.fechaInicio" type="date" />
+      </div>
+
+      <div class="input-group">
+        <label>Fecha de Fin</label>
+        <input [(ngModel)]="nuevoAlquiler.fechaFin" type="date" />
+      </div>
+    </div>
+    <button class="btn-primary" (click)="crear()">
+      <i class="fa-solid fa-file-signature"></i> Procesar Alquiler
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table class="premium-table">
+      <thead>
+        <tr>
+          <th>Alquiler ID</th>
+          <th>Cliente</th>
+          <th>Vehículo</th>
+          <th>Días</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of alquileres">
+          <td>
+            <div class="user-meta">
+              <div class="avatar-circle alquiler">
+                <i class="fa-solid fa-receipt"></i>
+              </div>
+              <div class="user-name">#{{ a.id ? a.id.substring(a.id.length - 6) : '' }}</div>
+            </div>
+          </td>
+          <td>{{ getClienteDniYNombre(a.clienteId) }}</td>
+          <td>{{ getVehiculoPlacaYInfo(a.vehiculoId) }}</td>
+          <td>{{ a.dias }} días</td>
+          <td>{{ a.fechaInicio }}</td>
+          <td>{{ a.fechaFin }}</td>
+          <td><strong>S/. {{ a.total }}</strong></td>
+          <td>
+            <span class="badge" [ngClass]="a.estado?.toLowerCase() || 'activo'">
+              {{ a.estado }}
+            </span>
+          </td>
+          <td>
+            <div class="actions-cell">
+              <button 
+                *ngIf="a.estado === 'ACTIVO'" 
+                class="btn-action desactivar" 
+                title="Desactivar Alquiler" 
+                (click)="desactivar(a.id!)">
+                <i class="fa-solid fa-ban"></i>
+              </button>
+              <button 
+                *ngIf="a.estado === 'INACTIVO'" 
+                class="btn-action activar" 
+                title="Activar Alquiler" 
+                (click)="activar(a.id!)">
+                <i class="fa-solid fa-circle-check"></i>
+              </button>
+              <button 
+                class="btn-action eliminar" 
+                title="Eliminar Alquiler" 
+                (click)="eliminar(a.id!)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

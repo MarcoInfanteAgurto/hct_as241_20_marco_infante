@@ -1,0 +1,99 @@
+<div class="contenedor">
+  <h2><i class="fa-solid fa-users"></i> Gestión de Clientes</h2>
+
+  <!-- Formulario de creación de cliente -->
+  <div class="formulario">
+    <h3><i class="fa-solid fa-user-plus"></i> Nuevo Cliente</h3>
+    <div class="grid-inputs">
+      <div class="input-group">
+        <label>DNI</label>
+        <input [(ngModel)]="nuevoCliente.dni" placeholder="Ingrese DNI" />
+      </div>
+      <div class="input-group">
+        <label>Nombres</label>
+        <input [(ngModel)]="nuevoCliente.nombres" placeholder="Nombres" />
+      </div>
+      <div class="input-group">
+        <label>Apellidos</label>
+        <input [(ngModel)]="nuevoCliente.apellidos" placeholder="Apellidos" />
+      </div>
+      <div class="input-group">
+        <label>Celular</label>
+        <input [(ngModel)]="nuevoCliente.celular" placeholder="Celular" />
+      </div>
+      <div class="input-group">
+        <label>Correo</label>
+        <input [(ngModel)]="nuevoCliente.correo" placeholder="Correo electrónico" />
+      </div>
+      <div class="input-group">
+        <label>Licencia</label>
+        <input [(ngModel)]="nuevoCliente.licencia" placeholder="N° de Licencia" />
+      </div>
+    </div>
+    <button class="btn-primary" (click)="crear()">
+      <i class="fa-solid fa-save"></i> Registrar Cliente
+    </button>
+  </div>
+
+  <!-- Tabla premium de Clientes -->
+  <div class="table-container">
+    <table class="premium-table">
+      <thead>
+        <tr>
+          <th>Apellidos y Nombres</th>
+          <th>Documento</th>
+          <th>Celular</th>
+          <th>Correo</th>
+          <th>Licencia</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of clientes">
+          <td>
+            <div class="user-meta">
+              <div class="avatar-circle">
+                {{ c.nombres ? c.nombres.substring(0, 1) : '' }}{{ c.apellidos ? c.apellidos.substring(0, 1) : '' }}
+              </div>
+              <div class="user-name">{{ c.apellidos }} {{ c.nombres }}</div>
+            </div>
+          </td>
+          <td>{{ c.dni }}</td>
+          <td>{{ c.celular }}</td>
+          <td>{{ c.correo }}</td>
+          <td>{{ c.licencia }}</td>
+          <td>
+            <span class="badge" [ngClass]="c.estado?.toLowerCase() || 'activo'">
+              {{ c.estado }}
+            </span>
+          </td>
+          <td>
+            <div class="actions-cell">
+              <button 
+                *ngIf="c.estado === 'ACTIVO'" 
+                class="btn-action desactivar" 
+                title="Desactivar Cliente" 
+                (click)="desactivar(c.id!)">
+                <i class="fa-solid fa-user-slash"></i>
+              </button>
+              <button 
+                *ngIf="c.estado === 'INACTIVO'" 
+                class="btn-action activar" 
+                title="Activar Cliente" 
+                (click)="activar(c.id!)">
+                <i class="fa-solid fa-user-check"></i>
+              </button>
+              <button 
+                class="btn-action eliminar" 
+                title="Eliminar Cliente" 
+                (click)="eliminar(c.id!)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

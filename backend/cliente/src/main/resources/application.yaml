@@ -1,0 +1,9 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: hct-cliente
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb+srv://marcoUser:infante983447196@cluster0.kx3fatq.mongodb.net/ms-cliente}

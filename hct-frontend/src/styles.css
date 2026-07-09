@@ -1,0 +1,375 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #0284c7; /* Sky blue/Navy base */
+  --primary-hover: #0369a1;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: #e2e8f0;
+  --status-active-bg: #e0f2fe; /* Light blue badge for Active/Available */
+  --status-active-txt: #0369a1; /* Dark blue text */
+  --status-inactive-bg: #fee2e2;
+  --status-inactive-txt: #991b1b;
+  --status-pending-bg: #fef9c3;
+  --status-pending-txt: #854d0e;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAVBAR MODERNO */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 18px 50px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px -2px rgba(0,0,0,0.02);
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-links a:hover {
+  color: var(--primary-color);
+  background: rgba(79, 70, 229, 0.06);
+}
+
+.navbar-links a.active {
+  color: white;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #38bdf8 100%);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+}
+
+/* CONTENEDOR PRINCIPAL */
+.contenedor {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* FORMULARIO ESTILO TARJETA PREMIUM */
+.formulario {
+  background: var(--card-bg);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+}
+
+.formulario h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.grid-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.input-group input, .input-group select {
+  padding: 12px 16px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  background: #ffffff;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  appearance: none; /* Quita el estilo nativo */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  padding-right: 40px;
+}
+
+.input-group input:not([type="date"]) {
+  background-image: none;
+  padding-right: 16px;
+}
+
+.input-group input:focus, .input-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #38bdf8 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.15);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(2, 132, 199, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* TABLA MODERNA DEL DISENIO PRESTADO (Estilo Card con bordes redondeados por fila) */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: transparent;
+  margin-top: 10px;
+}
+
+.premium-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px; /* Separación entre filas */
+  margin-top: -12px;
+}
+
+
+
+.premium-table tbody tr {
+  background: var(--card-bg);
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+  transition: all 0.2s ease;
+}
+
+.premium-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+
+
+.premium-table td {
+  padding: 16px 20px;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap; /* Impide que la información baje de renglón */
+  vertical-align: middle;
+}
+
+.premium-table th {
+  padding: 12px 20px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+  border: none;
+  white-space: nowrap; /* Impide saltos de línea en cabecera */
+}
+
+/* Redondear las esquinas de cada fila individualmente */
+.premium-table td:first-child {
+  border-left: 1px solid var(--border-color);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.premium-table td:last-child {
+  border-right: 1px solid var(--border-color);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* AVATAR/INICIALES ESTILO DEL CAPTURE */
+.user-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fce7f3;
+  color: #db2777;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.avatar-circle.vehiculo {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.avatar-circle.alquiler {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* BADGES DE ESTADO CON COLORES VIVOS */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge.activo, .badge.disponible {
+  background-color: var(--status-active-bg);
+  color: var(--status-active-txt);
+}
+
+.badge.inactivo, .badge.no_disponible, .badge.nodisponible {
+  background-color: var(--status-inactive-bg);
+  color: var(--status-inactive-txt);
+}
+
+/* BOTONES DE ACCIONES */
+.actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  background: #f1f5f9;
+  color: var(--text-secondary);
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+}
+
+.btn-action.desactivar {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.btn-action.desactivar:hover {
+  background: #fca5a5;
+  color: #b91c1c;
+}
+
+.btn-action.activar {
+  background: #dcfce7;
+  color: #22c55e;
+}
+
+.btn-action.activar:hover {
+  background: #bbf7d0;
+  color: #15803d;
+}
+
+.btn-action.eliminar {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.btn-action.eliminar:hover {
+  background: #e2e8f0;
+  color: #334155;
+}
+
