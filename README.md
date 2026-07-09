@@ -4,6 +4,26 @@ Este repositorio contiene la solución completa para el sistema de **Alquiler de
 
 ---
 
+## 🐳 Referencia de Imágenes en Docker Hub
+
+Las imágenes ya están compiladas bajo **Java 26** y publicadas en Docker Hub. Se pueden descargar de forma pública en cualquier máquina ejecutando los siguientes comandos:
+
+```bash
+# Descargar Microservicio Vehículos
+docker pull marco2909/hct-vehiculo:latest
+
+# Descargar Microservicio Clientes
+docker pull marco2909/hct-cliente:latest
+
+# Descargar Microservicio Alquileres (Transaccional)
+docker pull marco2909/hct-alquiler:latest
+
+# Descargar Frontend (Angular expuesto en Nginx)
+docker pull marco2909/hct-frontend:latest
+```
+
+---
+
 ## 🚀 Guía de Despliegue en Kubernetes
 
 Sigue las siguientes instrucciones paso a paso para levantar y testear todo el sistema en tu clúster de Kubernetes local.
