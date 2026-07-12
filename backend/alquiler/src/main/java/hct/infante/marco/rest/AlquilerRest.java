@@ -28,6 +28,11 @@ public class AlquilerRest {
         return alquilerService.crear(alquiler);
     }
 
+    @PutMapping("/{id}")
+    public Mono<Alquiler> actualizar(@PathVariable String id, @RequestBody Alquiler alquiler) {
+        return alquilerService.actualizar(id, alquiler);
+    }
+
     @DeleteMapping("/{id}")
     public Mono<Void> eliminar(@PathVariable String id) {
         return alquilerService.eliminar(id);

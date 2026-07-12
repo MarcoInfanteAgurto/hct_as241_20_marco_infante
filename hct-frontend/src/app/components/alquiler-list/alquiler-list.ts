@@ -19,6 +19,8 @@ export class AlquilerList implements OnInit {
   alquileres: Alquiler[] = [];
   clientesActivos: Cliente[] = [];
   vehiculosDisponibles: Vehiculo[] = [];
+  editando: boolean = false;
+  alquilerEdicionId: string | null = null;
 
   // diccionarios para busqueda rápida en la tabla
   mapClientes: { [id: string]: Cliente } = {};
@@ -76,16 +78,48 @@ export class AlquilerList implements OnInit {
   }
 
   crear(): void {
-    this.alquilerService.crear(this.nuevoAlquiler).subscribe({
-      next: () => {
-        this.cargarAlquileres();
-        this.cargarDatosRelacionados(); // Recargar estados por si cambiaron a no disponibles/inactivos
-        this.limpiarFormulario();
-      },
-      error: (err) => {
-        alert('Error al crear alquiler: ' + (err.error?.message || 'verifica los IDs y que estén disponibles/activos'));
-      }
-    });
+    if (this.editando && this.alquilerEdicionId) {
+      this.alquilerService.actualizar(this.alquilerEdicionId, this.nuevoAlquiler).subscribe({
+        next: () => {
+          this.cargarAlquileres();
+          this.cargarDatosRelacionados();
+          this.limpiarFormulario();
+        },
+        error: (err) => {
+          alert('Error al actualizar alquiler: ' + (err.error?.message || 'verifica los datos'));
+        }
+      });
+    } else {
+      this.alquilerService.crear(this.nuevoAlquiler).subscribe({
+        next: () => {
+          this.cargarAlquileres();
+          this.cargarDatosRelacionados(); // Recargar estados por si cambiaron a no disponibles/inactivos
+          this.limpiarFormulario();
+        },
+        error: (err) => {
+          alert('Error al crear alquiler: ' + (err.error?.message || 'verifica los IDs y que estén disponibles/activos'));
+        }
+      });
+    }
+  }
+
+  iniciarEdicion(alquiler: Alquiler): void {
+    this.editando = true;
+    this.alquilerEdicionId = alquiler.id || null;
+    this.nuevoAlquiler = { ...alquiler };
+    
+    const cActual = this.mapClientes[alquiler.clienteId];
+    if (cActual && !this.clientesActivos.some(c => c.id === cActual.id)) {
+      this.clientesActivos.push(cActual);
+    }
+    const vActual = this.mapVehiculos[alquiler.vehiculoId];
+    if (vActual && !this.vehiculosDisponibles.some(v => v.id === vActual.id)) {
+      this.vehiculosDisponibles.push(vActual);
+    }
+  }
+
+  cancelarEdicion(): void {
+    this.limpiarFormulario();
   }
 
   desactivar(id: string): void {
@@ -110,6 +144,8 @@ export class AlquilerList implements OnInit {
   }
 
   limpiarFormulario(): void {
+    this.editando = false;
+    this.alquilerEdicionId = null;
     this.nuevoAlquiler = {
       clienteId: '',
       vehiculoId: '',
@@ -117,6 +153,7 @@ export class AlquilerList implements OnInit {
       fechaInicio: '',
       fechaFin: ''
     };
+    this.cargarDatosRelacionados();
   }
 
   getClienteDniYNombre(id: string): string {

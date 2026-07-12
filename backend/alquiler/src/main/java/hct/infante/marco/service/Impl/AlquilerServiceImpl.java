@@ -80,6 +80,58 @@ public class AlquilerServiceImpl implements AlquilerService {
     }
 
     @Override
+    public Mono<Alquiler> actualizar(String id, Alquiler alquiler) {
+        return alquilerRepository.findById(id)
+                .flatMap(existente -> {
+                    String vehiculoAnteriorId = existente.getVehiculoId();
+                    String vehiculoNuevoId = alquiler.getVehiculoId();
+
+                    Mono<Cliente> clienteMono = clienteWebClient.get()
+                            .uri("/api/clientes/{id}", alquiler.getClienteId())
+                            .retrieve()
+                            .bodyToMono(Cliente.class);
+
+                    Mono<Vehiculo> vehiculoMono = vehiculoWebClient.get()
+                            .uri("/api/vehiculos/{id}", vehiculoNuevoId)
+                            .retrieve()
+                            .bodyToMono(Vehiculo.class);
+
+                    return Mono.zip(clienteMono, vehiculoMono)
+                            .flatMap(tupla -> {
+                                Cliente cliente = tupla.getT1();
+                                Vehiculo vehiculo = tupla.getT2();
+
+                                double total = vehiculo.getPrecioPoDia() * alquiler.getDias();
+
+                                existente.setClienteId(alquiler.getClienteId());
+                                existente.setVehiculoId(vehiculoNuevoId);
+                                existente.setDias(alquiler.getDias());
+                                existente.setFechaInicio(alquiler.getFechaInicio());
+                                existente.setFechaFin(alquiler.getFechaFin());
+                                existente.setTotal(total);
+
+                                if (!vehiculoAnteriorId.equals(vehiculoNuevoId)) {
+                                    Mono<Vehiculo> desactivarNuevoVehiculoMono = vehiculoWebClient.put()
+                                            .uri("/api/vehiculos/{id}/desactivar", vehiculoNuevoId)
+                                            .retrieve()
+                                            .bodyToMono(Vehiculo.class);
+
+                                    Mono<Vehiculo> activarAnteriorVehiculoMono = vehiculoWebClient.put()
+                                            .uri("/api/vehiculos/{id}/activar", vehiculoAnteriorId)
+                                            .retrieve()
+                                            .bodyToMono(Vehiculo.class);
+
+                                    return desactivarNuevoVehiculoMono
+                                            .then(activarAnteriorVehiculoMono)
+                                            .then(alquilerRepository.save(existente));
+                                }
+
+                                return alquilerRepository.save(existente);
+                            });
+                });
+    }
+
+    @Override
     public Mono<Void> eliminar(String id) {
         return alquilerRepository.deleteById(id);
     }

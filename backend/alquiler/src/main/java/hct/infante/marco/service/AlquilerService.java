@@ -12,6 +12,8 @@ public interface AlquilerService {
 
     Mono<Alquiler> crear(Alquiler alquiler);
 
+    Mono<Alquiler> actualizar(String id, Alquiler alquiler);
+
     Mono<Void> eliminar(String id);
 
     Mono<Alquiler> activar(String id);

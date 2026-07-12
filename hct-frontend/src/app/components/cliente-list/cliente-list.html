@@ -3,7 +3,10 @@
 
   <!-- Formulario de creación de cliente -->
   <div class="formulario">
-    <h3><i class="fa-solid fa-user-plus"></i> Nuevo Cliente</h3>
+    <h3>
+      <i class="fa-solid" [ngClass]="editando ? 'fa-user-pen' : 'fa-user-plus'"></i> 
+      {{ editando ? 'Editar Cliente' : 'Nuevo Cliente' }}
+    </h3>
     <div class="grid-inputs">
       <div class="input-group">
         <label>DNI</label>
@@ -30,9 +33,15 @@
         <input [(ngModel)]="nuevoCliente.licencia" placeholder="N° de Licencia" />
       </div>
     </div>
-    <button class="btn-primary" (click)="crear()">
-      <i class="fa-solid fa-save"></i> Registrar Cliente
-    </button>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn-primary" (click)="crear()">
+        <i class="fa-solid" [ngClass]="editando ? 'fa-pen-to-square' : 'fa-save'"></i> 
+        {{ editando ? 'Actualizar Cliente' : 'Registrar Cliente' }}
+      </button>
+      <button *ngIf="editando" class="btn-primary" style="background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%); box-shadow: 0 4px 10px rgba(100, 116, 139, 0.15);" (click)="cancelarEdicion()">
+        <i class="fa-solid fa-xmark"></i> Cancelar
+      </button>
+    </div>
   </div>
 
   <!-- Tabla premium de Clientes -->
@@ -70,6 +79,12 @@
           </td>
           <td>
             <div class="actions-cell">
+              <button 
+                class="btn-action editar" 
+                title="Editar Cliente" 
+                (click)="iniciarEdicion(c)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
               <button 
                 *ngIf="c.estado === 'ACTIVO'" 
                 class="btn-action desactivar" 

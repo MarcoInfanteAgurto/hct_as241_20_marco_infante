@@ -23,6 +23,10 @@ export class AlquilerService {
     return this.http.post<Alquiler>(this.baseUrl, alquiler);
   }
 
+  actualizar(id: string, alquiler: Alquiler): Observable<Alquiler> {
+    return this.http.put<Alquiler>(`${this.baseUrl}/${id}`, alquiler);
+  }
+
   eliminar(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }

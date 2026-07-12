@@ -13,6 +13,8 @@ import { ClienteService } from '../../services/cliente';
 })
 export class ClienteList implements OnInit {
   clientes: Cliente[] = [];
+  editando: boolean = false;
+  clienteEdicionId: string | null = null;
 
   nuevoCliente: Cliente = {
     dni: '',
@@ -40,10 +42,27 @@ export class ClienteList implements OnInit {
   }
 
   crear(): void {
-    this.clienteService.crear(this.nuevoCliente).subscribe(() => {
-      this.cargarClientes();
-      this.limpiarFormulario();
-    });
+    if (this.editando && this.clienteEdicionId) {
+      this.clienteService.actualizar(this.clienteEdicionId, this.nuevoCliente).subscribe(() => {
+        this.cargarClientes();
+        this.limpiarFormulario();
+      });
+    } else {
+      this.clienteService.crear(this.nuevoCliente).subscribe(() => {
+        this.cargarClientes();
+        this.limpiarFormulario();
+      });
+    }
+  }
+
+  iniciarEdicion(cliente: Cliente): void {
+    this.editando = true;
+    this.clienteEdicionId = cliente.id || null;
+    this.nuevoCliente = { ...cliente };
+  }
+
+  cancelarEdicion(): void {
+    this.limpiarFormulario();
   }
 
   desactivar(id: string): void {
@@ -65,6 +84,8 @@ export class ClienteList implements OnInit {
   }
 
   limpiarFormulario(): void {
+    this.editando = false;
+    this.clienteEdicionId = null;
     this.nuevoCliente = {
       dni: '',
       nombres: '',

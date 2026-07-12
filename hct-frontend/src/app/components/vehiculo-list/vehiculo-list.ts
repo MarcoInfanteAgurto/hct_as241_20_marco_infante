@@ -13,6 +13,8 @@ import { VehiculoService } from '../../services/vehiculo';
 })
 export class VehiculoList implements OnInit {
   vehiculos: Vehiculo[] = [];
+  editando: boolean = false;
+  vehiculoEdicionId: string | null = null;
 
   nuevoVehiculo: Vehiculo = {
     placa: '',
@@ -40,10 +42,27 @@ export class VehiculoList implements OnInit {
   }
 
   crear(): void {
-    this.vehiculoService.crear(this.nuevoVehiculo).subscribe(() => {
-      this.cargarVehiculos();
-      this.limpiarFormulario();
-    });
+    if (this.editando && this.vehiculoEdicionId) {
+      this.vehiculoService.actualizar(this.vehiculoEdicionId, this.nuevoVehiculo).subscribe(() => {
+        this.cargarVehiculos();
+        this.limpiarFormulario();
+      });
+    } else {
+      this.vehiculoService.crear(this.nuevoVehiculo).subscribe(() => {
+        this.cargarVehiculos();
+        this.limpiarFormulario();
+      });
+    }
+  }
+
+  iniciarEdicion(vehiculo: Vehiculo): void {
+    this.editando = true;
+    this.vehiculoEdicionId = vehiculo.id || null;
+    this.nuevoVehiculo = { ...vehiculo };
+  }
+
+  cancelarEdicion(): void {
+    this.limpiarFormulario();
   }
 
   desactivar(id: string): void {
@@ -65,6 +84,8 @@ export class VehiculoList implements OnInit {
   }
 
   limpiarFormulario(): void {
+    this.editando = false;
+    this.vehiculoEdicionId = null;
     this.nuevoVehiculo = {
       placa: '',
       marca: '',

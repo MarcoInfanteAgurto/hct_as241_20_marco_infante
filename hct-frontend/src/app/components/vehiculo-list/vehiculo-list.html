@@ -3,7 +3,10 @@
 
   <!-- Formulario de creación -->
   <div class="formulario">
-    <h3><i class="fa-solid fa-square-plus"></i> Nuevo Vehículo</h3>
+    <h3>
+      <i class="fa-solid" [ngClass]="editando ? 'fa-pen-to-square' : 'fa-square-plus'"></i> 
+      {{ editando ? 'Editar Vehículo' : 'Nuevo Vehículo' }}
+    </h3>
     <div class="grid-inputs">
       <div class="input-group">
         <label>Placa</label>
@@ -30,9 +33,15 @@
         <input [(ngModel)]="nuevoVehiculo.precioPoDia" type="number" placeholder="Precio" />
       </div>
     </div>
-    <button class="btn-primary" (click)="crear()">
-      <i class="fa-solid fa-save"></i> Registrar Vehículo
-    </button>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn-primary" (click)="crear()">
+        <i class="fa-solid" [ngClass]="editando ? 'fa-pen-to-square' : 'fa-save'"></i> 
+        {{ editando ? 'Actualizar Vehículo' : 'Registrar Vehículo' }}
+      </button>
+      <button *ngIf="editando" class="btn-primary" style="background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%); box-shadow: 0 4px 10px rgba(100, 116, 139, 0.15);" (click)="cancelarEdicion()">
+        <i class="fa-solid fa-xmark"></i> Cancelar
+      </button>
+    </div>
   </div>
 
   <!-- Tabla de listado -->
@@ -70,6 +79,12 @@
           </td>
           <td>
             <div class="actions-cell">
+              <button 
+                class="btn-action editar" 
+                title="Editar Vehículo" 
+                (click)="iniciarEdicion(v)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
               <button 
                 *ngIf="v.estado === 'DISPONIBLE'" 
                 class="btn-action desactivar" 

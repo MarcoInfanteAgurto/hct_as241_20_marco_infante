@@ -363,6 +363,16 @@ h2 {
   color: #15803d;
 }
 
+.btn-action.editar {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.btn-action.editar:hover {
+  background: #fde68a;
+  color: #b45309;
+}
+
 .btn-action.eliminar {
   background: #f1f5f9;
   color: #64748b;
@@ -372,4 +382,5 @@ h2 {
   background: #e2e8f0;
   color: #334155;
 }
+
 
